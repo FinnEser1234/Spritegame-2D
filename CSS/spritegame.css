@@ -40,41 +40,28 @@ html, body {
   top: 10%;
 }
 
-#startButton {
+
+#btnGrid div {
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 20px;
   padding: 10px;
-  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
   transition: transform 0.2s ease;
 }
 
-#ruleButton {
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 20px;
-  padding: 10px;
-  border-bottom: 2px solid transparent;
-  transition: transform 0.2s ease;
-}
-
-#startButton:hover {
+#btnGrid div:hover {
   transform: scale(1.1);
-  border-bottom-color: #2b1d0e;
+  border-left-color: white;
 }
-
-#ruleButton:hover {
-  transform: scale(1.1);
-  border-bottom-color: #2b1d0e;
-}
-
 
 #debug_output {
   position: absolute;
   font-size: 1.2rem;
-  line-height: 1.5;
+  line-height: 2;
   text-align: center;
-  left: 80%;
+  left: 78.5%;
+  top: 33%;
 }
 
 #gameGrid {
@@ -91,11 +78,13 @@ html, body {
 #startMenu {
   position: absolute;
   z-index: 1000;
-  left: 40%;
+  left: 35%;
+  top: 35%;
   text-align: center;
-  margin-top: 15%;
   font-size: 1.5rem;
   font-family: schreibschrift;
+  background-color: black;
+  padding: 2%;
 }
 
 #surface {

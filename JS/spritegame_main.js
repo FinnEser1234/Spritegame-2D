@@ -27,6 +27,8 @@ let GAME_CONFIG = {
 
 let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
+let aufruesten = new Audio("../SOUNDS/aufruesten.mp3");
+
 
 /***********************************
  * START GAME
@@ -38,10 +40,10 @@ function startGame() {
   gameGrid.style.opacity = 1;
   gameGrid.style.zIndex = 1000;
 
-  PLAYER.box.style.left = "100px"; // Eleven Startposition
-  PLAYER.box.style.top = "220px";
-  PLAYER.box.style.opacity = 1;
-  PLAYER.spriteImg.style.right = "0px";
+  PLAYER.box.style.left = "100px"; //Startposition X
+  PLAYER.box.style.top = "220px"; //Startposition Y
+  PLAYER.box.style.opacity = 1; //Spieler sichtbar machen
+  PLAYER.spriteImg.style.right = "0px"; //Startposition Sprite
 
   GAME_SCREEN.startButton.style.display = "none";
   GAME_SCREEN.startButton.removeAttribute("onclick");
@@ -96,6 +98,7 @@ function gameLoop() {
           break;
       }
 
+      aufruesten.play();
       updateScoreDisplay();
       generateNewCoin();
     }
