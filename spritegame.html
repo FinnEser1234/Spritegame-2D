@@ -17,9 +17,16 @@
 <body>
   <div id="startMenu">
     <h1>Twilight Specter</h1>
-    <div id="btnGrid">
-      <div id="startButton" onclick="startGame()">Start Game</div>
-      <div id="ruleButton">Rules</div>
+    
+    <div id="audioQuery">
+      <p>Musik aktivieren?</p>
+      <div class="menu-btn" onclick="permitAudio(true)">Ja</div>
+      <div class="menu-btn" onclick="permitAudio(false)">Nein</div>
+    </div>
+    
+    <div id="btnGrid" style="display: none;">
+      <div class="menu-btn" id="startButton" onclick="startGame()">Start Game</div>
+      <div class="menu-btn" id="ruleButton">Rules</div>
     </div>
   </div>
 

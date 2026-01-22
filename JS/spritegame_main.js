@@ -27,13 +27,25 @@ let GAME_CONFIG = {
 
 let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
-let aufruesten = new Audio("../SOUNDS/aufruesten.mp3");
+let aufruesten = new Audio("./SOUNDS/aufruesten.mp3"); // Start with user's existing, corrected path if it was wrong
+let bgMusic = new Audio("./SOUNDS/backgroundMusic.mp3");
+bgMusic.loop = true;
+let soundEnabled = false;
 
+function permitAudio(shouldEnable) {
+  soundEnabled = shouldEnable;
+  document.getElementById("audioQuery").style.display = "none";
+  document.getElementById("btnGrid").style.display = "block";
+}
 
 /***********************************
  * START GAME
  ***********************************/
 function startGame() {
+  if (soundEnabled) {
+    bgMusic.play().catch((err) => console.log("Audio play failed:", err));
+  }
+
   startMenu.style.opacity = 0;
   startMenu.style.zIndex = -1;
 
