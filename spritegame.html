@@ -8,6 +8,12 @@
 
   <link rel="stylesheet" href="./CSS/spritegame.css" />
 
+  <style>
+    #btnGrid {
+      display: none;
+    }
+  </style>
+
   <script src="./JS/spritegame_detectCollisions.js" defer></script>
   <script src="./JS/spritegame_keyevents.js" defer></script>
   <script src="./JS/spritegame_player.js" defer></script>
@@ -24,7 +30,7 @@
       <div class="menu-btn" onclick="permitAudio(false)">Nein</div>
     </div>
     
-    <div id="btnGrid" style="display: none;">
+    <div id="btnGrid">
       <div class="menu-btn" id="startButton" onclick="startGame()">Start Game</div>
       <div class="menu-btn" id="ruleButton">Rules</div>
     </div>
