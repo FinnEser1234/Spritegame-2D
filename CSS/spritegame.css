@@ -38,6 +38,7 @@ html, body {
   position: relative;
   left: 50%;
   top: 10%;
+  width: 800px;
 }
 
 
@@ -67,8 +68,8 @@ html, body {
   font-size: 1.2rem;
   line-height: 2;
   text-align: center;
-  left: 78.5%;
-  top: 33%;
+  left: 87%;
+  top: 38%;
 }
 
 #gameGrid {
@@ -111,9 +112,8 @@ html, body {
   box-shadow: 0 0 30px rgb(24, 37, 26);
   height: 600px;
   width: 800px;
-  max-width: calc(100vw - 320px);
   position: relative;
-  transform-origin: top;
+  transform-origin: center;
 }
 #player {
   position: absolute;

@@ -10,12 +10,46 @@ let GAME_SCREEN = {
   currentCoinType: 0,
 };
 
-// Scale the surface to xx% of the screen width
-GAME_SCREEN.surface.style.transform =
-  "scale(" +
-  (parseFloat(GAME_SCREEN.surfaceScale) / 100) *
-    (window.innerWidth / GAME_SCREEN.surface.clientWidth) +
-  ")";
+// Scale the surface to fit the screen
+function resizeGame() {
+  const containerWidth = window.innerWidth;
+  const containerHeight = window.innerHeight;
+  const surfaceWidth = 800; // Original width
+  const surfaceHeight = 600; // Original height
+  const dashboardWidth = 250; // Width of the dashboard
+  const gap = 50; // Gap between surface and dashboard
+  const padding = 40; // Safety padding
+
+  // Width available for the surface (Total - Dashboard - Gap - Padding)
+  const availableWidth = containerWidth - dashboardWidth - gap - padding * 2;
+  // Height available (Total - Padding)
+  const availableHeight = containerHeight - padding * 2;
+
+  // Calculate scale to fit both dimensions
+  let scale = Math.min(
+    availableWidth / surfaceWidth,
+    availableHeight / surfaceHeight
+  );
+
+  // Limit minimum scale
+  if (scale < 0.3) scale = 0.3;
+
+  GAME_SCREEN.surface.style.transform = `scale(${scale})`;
+  
+  // Adjust margins to remove whitespace caused by scaling (centering)
+  const marginH = (surfaceWidth * (scale - 1)) / 2;
+  const marginV = (surfaceHeight * (scale - 1)) / 2;
+
+  GAME_SCREEN.surface.style.marginLeft = `${marginH}px`;
+  GAME_SCREEN.surface.style.marginRight = `${marginH}px`;
+  GAME_SCREEN.surface.style.marginTop = `${marginV}px`;
+  GAME_SCREEN.surface.style.marginBottom = `${marginV}px`;
+}
+
+// Initial call
+resizeGame();
+// Adjust on window resize
+window.addEventListener('resize', resizeGame);
 
 /***********************************
  * GAME CONFIG
