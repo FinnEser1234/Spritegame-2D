@@ -7,12 +7,7 @@
   <title>Twilight Specter</title>
 
   <link rel="stylesheet" href="./CSS/spritegame.css" />
-
-  <style>
-    #btnGrid {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="./CSS/spritegame_rules.css">
 
   <script src="./JS/spritegame_detectCollisions.js" defer></script>
   <script src="./JS/spritegame_keyevents.js" defer></script>
@@ -20,19 +15,47 @@
   <script src="./JS/spritegame_main.js" defer></script>
 </head>
 
-<body>
+<body id="body">
   <div id="startMenu">
     <h1>Twilight Specter</h1>
     
-    <div id="audioQuery">
-      <p>Musik aktivieren?</p>
-      <div class="menu-btn" onclick="permitAudio(true)">Ja</div>
-      <div class="menu-btn" onclick="permitAudio(false)">Nein</div>
+    <div id="btnGrid">
+      <div class="menu-btn" id="startButton" onclick="startGame()">
+        <div class="btn-inner">Start Game</div>
+      </div>
+      <div class="menu-btn" id="ruleButton" onclick="showRules()">
+        <div class="btn-inner">Rules</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rulesMenu">
+    <div class="book-page left-page">
+      <div class="rule-box">
+        <img src="./IMG/rustung1.png" alt="Helmet">
+        <p>Collect 5 Helmets</p>
+      </div>
+      <div class="rule-box">
+        <img src="./IMG/rustung4.png" alt="Armor">
+        <p>Collect 5 Armors</p>
+      </div>
     </div>
     
-    <div id="btnGrid">
-      <div class="menu-btn" id="startButton" onclick="startGame()">Start Game</div>
-      <div class="menu-btn" id="ruleButton">Rules</div>
+    <div class="book-page right-page">
+      <div class="rule-box">
+        <img src="./IMG/rustung2.png" alt="Skirt">
+        <p>Collect 5 Skirts</p>
+      </div>
+      <div class="rule-box">
+        <img src="./IMG/rustung3.png" alt="Shoes">
+        <p>Collect 5 Shoes</p>
+      </div>
+    </div>
+
+    <div class="back-btn-wrapper">
+      <div class="menu-btn back-btn" onclick="closeRules()">
+          <div class="btn-inner">Back</div>
+      </div>
     </div>
   </div>
 

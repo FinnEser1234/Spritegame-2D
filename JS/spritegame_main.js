@@ -63,36 +63,49 @@ let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
 let aufruesten = new Audio("./SOUNDS/aufruesten.mp3"); // Start with user's existing, corrected path if it was wrong
 let bgMusic = new Audio("./SOUNDS/backgroundMusic.mp3");
+let doorSound = new Audio("./SOUNDS/door.mp3");
 bgMusic.loop = true;
-let soundEnabled = false;
-
-function permitAudio(shouldEnable) {
-  soundEnabled = shouldEnable;
-  document.getElementById("audioQuery").style.display = "none";
-  document.getElementById("btnGrid").style.display = "block";
-}
 
 /***********************************
  * START GAME
  ***********************************/
 function startGame() {
-  if (soundEnabled) {
-    bgMusic.play().catch((err) => console.log("Audio play failed:", err));
-  }
-
+  // Hide menu immediately
   startMenu.style.opacity = 0;
   startMenu.style.zIndex = -1;
+  GAME_SCREEN.startButton.style.display = "none";
+  GAME_SCREEN.startButton.removeAttribute("onclick");
+
+  // Make screen black
+  document.body.style.backgroundImage = "none";
+  document.body.style.backgroundColor = "black";
+
+  // Play door sound first
+  doorSound.playbackRate = 1.6; 
+  doorSound.play().catch((err) => {
+    console.log("Door audio play failed:", err);
+    // If door sound fails, start immediately
+    revealGame();
+  });
+  
+  doorSound.onended = function() {
+    revealGame();
+  };
+}
+
+function revealGame() {
+  bgMusic.play().catch((err) => console.log("Bg audio play failed:", err));
+
+  document.body.style.backgroundImage = "url('./IMG/background.avif')";
+  document.body.style.backgroundSize = "contain";
 
   gameGrid.style.opacity = 1;
   gameGrid.style.zIndex = 1000;
 
-  PLAYER.box.style.left = "100px"; //Startposition X
-  PLAYER.box.style.top = "220px"; //Startposition Y
-  PLAYER.box.style.opacity = 1; //Spieler sichtbar machen
-  PLAYER.spriteImg.style.right = "0px"; //Startposition Sprite
-
-  GAME_SCREEN.startButton.style.display = "none";
-  GAME_SCREEN.startButton.removeAttribute("onclick");
+  PLAYER.box.style.left = "100px"; 
+  PLAYER.box.style.top = "220px"; 
+  PLAYER.box.style.opacity = 1; 
+  PLAYER.spriteImg.style.right = "0px"; 
 
   generateNewCoin();
   gameLoop();
@@ -179,4 +192,15 @@ function generateNewCoin() {
   GAME_SCREEN.redBox.style.top = yCord + "px";
 
   return randomItem;
+}
+
+function showRules() {
+  document.getElementById("startMenu").style.display = "none";
+  let rulesMenu = document.getElementById("rulesMenu");
+  rulesMenu.style.display = "flex";
+}
+
+function closeRules() {
+  document.getElementById("rulesMenu").style.display = "none";
+  document.getElementById("startMenu").style.display = "block";
 }

@@ -7,10 +7,10 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  color: #fff;
-  background-image: url('../IMG/background.avif');
+  background-image: url('../IMG/mainBackground.png');
   min-height: 100vh;
   overflow: hidden;
+  background-size: cover;
 }
 
 
@@ -45,22 +45,25 @@ html, body {
 .menu-btn {
   cursor: pointer;
   margin: 10px auto;
-  padding: 10px;
-  transition: all 0.2s ease;
-  color: #bbb;
+  width: 33%;
+  perspective: 600px;
 }
 
-.menu-btn:hover {
-  transform: scale(1.1);
+.btn-inner {
+  padding: 10px;
+  transition: transform 0.6s, color 0.6s, text-shadow 0.6s;
+  color: #402B15;
+  background-image: url('../IMG/woodplank.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.menu-btn:hover .btn-inner {
+  background-image: url('../IMG/woodplank.png');
+  transform: rotateX(360deg);
   color: #fff;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-}
-
-#audioQuery p {
-  color: #ddd;
-  margin-bottom: 20px;
-  font-family: sans-serif;
-  font-size: 1rem;
 }
 
 #debug_output {
@@ -93,7 +96,13 @@ html, body {
   font-size: 1.5rem;
   font-family: schreibschrift;
   /* Minimalistisch transparent */
+  width: 50%;
   padding: 20px;
+  background-color: rgba(16, 22, 38, 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 60px 30px rgba(94, 121, 151, 0.9);
+  border-radius: 40px;
+  border: 2px solid rgba(94, 121, 151);
 }
 
 #startMenu h1 {
