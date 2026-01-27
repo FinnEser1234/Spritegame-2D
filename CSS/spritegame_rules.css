@@ -9,12 +9,12 @@
   background-image: url('../IMG/book.jpg'); /* Background here prevents lag */
   background-size: cover;
   background-position: center;
-  padding: 50px;
+  padding: 20px;
   box-sizing: border-box;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10%;
+  gap: 10px;
 }
 
 .book-page {
@@ -23,23 +23,29 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
-  width: 35%; /* Approximate width of a page */
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 22%;
+  padding-bottom: 22%;
 }
 
-/* Specific adjustments if needed for left/right page alignment */
 .left-page {
-  padding-right: 20px;
+  padding-left: 12%; 
+  padding-right: 4%;
 }
 
 .right-page {
-  padding-left: 20px;
+  padding-left: 4%;
+  padding-right: 12%;
 }
 
+/* Specific adjustments if needed for left/right page alignment */
 
 .rule-box {
-  width: 200px;
-  height: 250px;
-  border: 4px solid #402B15;
+  width: 100%;
+  height: auto;
+  padding: 20px;
   background-color: transparent; /* Transparent background */
   box-shadow: none; /* No shadow */
   border-radius: 15px;
@@ -48,6 +54,7 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
+  -webkit-backdrop-filter: none;
   backdrop-filter: none; /* Removed blur */
 }
 

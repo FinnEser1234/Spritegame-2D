@@ -59,6 +59,8 @@ let GAME_CONFIG = {
   characterSpeed: 4, // px per step
 };
 
+let gameRunning = false;
+
 let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
 let aufruesten = new Audio("./SOUNDS/aufruesten.mp3"); // Start with user's existing, corrected path if it was wrong
@@ -70,6 +72,13 @@ bgMusic.loop = true;
  * START GAME
  ***********************************/
 function startGame() {
+  // Reset Scores
+  PLAYER.helmetCount = 0;
+  PLAYER.harnischCount = 0;
+  PLAYER.skirtCount = 0;
+  PLAYER.shoesCount = 0;
+  updateScoreDisplay();
+
   // Hide menu immediately
   startMenu.style.opacity = 0;
   startMenu.style.zIndex = -1;
@@ -93,7 +102,28 @@ function startGame() {
   };
 }
 
+function mainMenu() {
+  gameRunning = false;
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+
+  document.body.style.backgroundImage = "url('./IMG/mainBackground.png')";
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundColor = "";
+
+  startMenu.style.opacity = 1;
+  startMenu.style.zIndex = 1000;
+  startMenu.style.display = "block";
+
+  GAME_SCREEN.startButton.style.display = "block";
+  GAME_SCREEN.startButton.setAttribute("onclick", "startGame()");
+
+  gameGrid.style.opacity = 0;
+  gameGrid.style.zIndex = -1;
+}
+
 function revealGame() {
+  gameRunning = true;
   bgMusic.play().catch((err) => console.log("Bg audio play failed:", err));
 
   document.body.style.backgroundImage = "url('./IMG/background.avif')";
@@ -115,6 +145,8 @@ function revealGame() {
  * GAME LOOP
  ***********************************/
 function gameLoop() {
+  if (!gameRunning) return;
+
   // User Input Check
   if (KEY_EVENTS.leftArrow) {
     movePlayer(-GAME_CONFIG.characterSpeed, 0, -1);
@@ -163,11 +195,8 @@ function gameLoop() {
     }
   }
 
-  // hier kannst du später Collision mit dem Portal einbauen
-  // if (isColliding(PLAYER.box, GAME_SCREEN.redBox, 0)) { ... }
-
   if (PLAYER.helmetCount > 5 && PLAYER.harnischCount > 5 && PLAYER.skirtCount > 5 && PLAYER.shoesCount > 5) {
-    GAME_SCREEN.debug_output.innerHTML = `<h2>You win!</h2><p>Refresh the page to play again.</p>`;
+    GAME_SCREEN.debug_output.innerHTML = `<h2>You win!</h2><p>Bossfight soon</p>`;
     return; 
   }
 
