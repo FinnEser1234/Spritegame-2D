@@ -75,7 +75,7 @@ function movePlayer(dx, dy, dr) {
 }
 
 function updateScoreDisplay() {
-    GAME_SCREEN.debug_output.innerHTML = `<p>Helmet count: ${PLAYER.helmetCount} </p><p>Harnisch count: ${PLAYER.harnischCount} </p><p>Skirt count: ${PLAYER.skirtCount} </p><p>Shoes count: ${PLAYER.shoesCount}`;
+    GAME_SCREEN.debug_output.innerHTML = `<p>Helmet: ${PLAYER.helmetCount} <img src="../IMG/rustung1.png" alt=""></p><p>Harnisch: ${PLAYER.harnischCount} <img src="../IMG/rustung4.png" alt=""></p><p>Skirt: ${PLAYER.skirtCount} <img src="../IMG/rustung2.png" alt=""></p><p>Shoes: ${PLAYER.shoesCount} <img src="../IMG/rustung3.png" alt=""></p>`;
 }
 
 

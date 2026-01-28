@@ -59,17 +59,20 @@ html, body {
 .menu-btn:hover .btn-inner {
   background-image: url('../IMG/woodplank.png');
   transform: rotateX(360deg);
-  color: #fff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
 #debug_output {
   position: absolute;
   font-size: 1.2rem;
   line-height: 2;
-  text-align: center;
-  left: 81%;
-  top: 35%;
+  text-align: right;
+  left: 82%;
+  top: 34%;
+}
+
+#debug_output img {
+  width: 30px;
+  height: auto;
 }
 
 #pen {
@@ -112,11 +115,30 @@ html, body {
 }
 
 #startMenu h1 {
+}
+
+#woodLog {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  z-index: -10;
+}
+
+#startMenu h1 {
   font-size: 3rem;
   margin-top: 0;
   margin-bottom: 30px;
-  color: #fff;
-  text-shadow: 2px 2px 10px #000;
+  
+  background-image: url('../IMG/woodplank.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px;
+  color: #402B15;
 }
 
 #surface {
