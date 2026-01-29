@@ -6,8 +6,7 @@
     height: 100vh;
     z-index: 2000;
     
-    /* Background Image setup */
-    background-image: url('../IMG//characterBackground.png'); /* HIER DATEINAMEN ÄNDERN */
+    background-image: url('../IMG//characterBackground.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -15,8 +14,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end; /* Push content down, assuming seats are lower */
-    padding-bottom: 50px; /* Space from bottom */
+    justify-content: flex-end;
+    padding-bottom: 50px;
     
     opacity: 0;
     pointer-events: none;
@@ -39,20 +38,18 @@
 
 .char-cards-container {
     display: flex;
-    gap: 15rem; /* Wide gap for the 3 seats */
-    align-items: flex-end; /* Align bottom to help with sitting look */
+    gap: 15rem;
+    align-items: flex-end;
     margin-bottom: 2rem;
     position: relative;
-    top: -100px; /* Adjust rough vertical position */
+    top: -100px;
 }
 
-/* Individual Card Styling - Transparent */
 .char-card {
     position: relative;
     width: 120px;
     height: 160px;
     
-    /* No border/background by default */
     background: transparent;
     border: none;
     
@@ -60,12 +57,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end; /* Image at bottom */
+    justify-content: flex-end;
     
     transition: transform 0.2s ease;
 }
-
-/* IDs for individual positioning adjustment */
 #charCard1 {
     transform: translateY(-60%);
 }
@@ -81,7 +76,7 @@
     width: 64px;
     height: 64px;
     image-rendering: pixelated;
-    transform: scale(3); /* Bigger characters */
+    transform: scale(3);
     margin-bottom: 10px;
     filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
     transition: transform 0.2s, filter 0.2s;
@@ -93,7 +88,7 @@
 }
 
 .char-card.selected img {
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); /* Glow when selected */
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
     transform: scale(3.2);
 }
 
@@ -112,10 +107,9 @@
     color: #ffd700;
 }
 
-/* INPUT SECTION - Floating nicely somewhere */
 #contractSection {
     position: absolute;
-    bottom: 50px; /* At the bottom */
+    bottom: 50px;
     
     display: flex;
     flex-direction: column;
