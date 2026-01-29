@@ -8,24 +8,29 @@
 
   <link rel="stylesheet" href="./CSS/spritegame.css" />
   <link rel="stylesheet" href="./CSS/spritegame_rules.css">
+  <link rel="stylesheet" href="./CSS/char_selection.css">
 
   <script src="./JS/spritegame_detectCollisions.js" defer></script>
   <script src="./JS/spritegame_keyevents.js" defer></script>
   <script src="./JS/spritegame_player.js" defer></script>
   <script src="./JS/spritegame_main.js" defer></script>
+  <script src="./JS/spritegame_character.js" defer></script>
 </head>
 
 <body id="body">
   <div id="startMenu">
     <h1>Twilight Specter</h1>
-    
+
     <img id="woodLog" src="./IMG/log.jpg" alt="">
     <div id="btnGrid">
-      <div class="menu-btn" id="startButton" onclick="startGame()">
+      <div class="menu-btn" id="startButton" onclick="openCharSelection()">
         <div class="btn-inner">Start Game</div>
       </div>
       <div class="menu-btn" id="ruleButton" onclick="showRules()">
         <div class="btn-inner">Rules</div>
+      </div>
+      <div class="menu-btn" id="leaderBoard" onclick="showLeaderboard()">
+        <div class="btn-inner">Leaderboard</div>
       </div>
     </div>
   </div>
@@ -33,25 +38,58 @@
   <div id="rulesMenu">
     <div class="book-page left-page">
       <div class="rule-box">
-        <p>Nutze die Tasten W, A, S, D oder die Pfeiltasten auf deiner Tastatur, um deinen verlorenen Geist sicher durch die dunkle und gefährliche Ebene zu manövrieren.</p>
+        <p>Nutze die Tasten W, A, S, D oder die Pfeiltasten auf deiner Tastatur, um deinen verlorenen Geist sicher durch
+          die dunkle und gefährliche Ebene zu manövrieren.</p>
       </div>
       <div class="rule-box">
-        <p>Solltest du jemals den Weg zurück suchen, klicke einfach auf den mystischen Federkiel am unteren Bildschirmrand. Er dient dir als Ausweg, um das Spiel jederzeit zu verlassen oder ins Hauptmenü zurückzukehren.</p>
+        <p>Solltest du jemals den Weg zurück suchen, klicke einfach auf den mystischen Federkiel am unteren
+          Bildschirmrand. Er dient dir als Ausweg, um das Spiel jederzeit zu verlassen oder ins Hauptmenü
+          zurückzukehren.</p>
       </div>
     </div>
-    
+
     <div class="book-page right-page">
       <div class="rule-box">
-        <p>Deine Aufgabe ist es, die verstreuten Rüstungsteile wiederzufinden. Suche gründlich, denn du musst von jeder einzelnen Rüstungsart mehr als 5 Exemplare einsammeln, um deine Stärke zu beweisen.</p>
+        <p>Deine Aufgabe ist es, die verstreuten Rüstungsteile wiederzufinden. Suche gründlich, denn du musst von jeder
+          einzelnen Rüstungsart mehr als 5 Exemplare einsammeln, um deine Stärke zu beweisen.</p>
       </div>
       <div class="rule-box">
-        <p>Nur wenn du all diese Artefakte vereinst und deine Sammlung vervollständigst, wird der Fluch gebrochen. Dann erst wird deine umherwandernde Seele ihren lang ersehnten ewigen Frieden finden.</p>
+        <p>Nur wenn du all diese Artefakte vereinst und deine Sammlung vervollständigst, wird der Fluch gebrochen. Dann
+          erst wird deine umherwandernde Seele ihren lang ersehnten ewigen Frieden finden.</p>
       </div>
     </div>
 
     <div class="back-btn-wrapper">
       <div class="menu-btn back-btn" onclick="closeRules()">
-          <div class="btn-inner">Back</div>
+        <div class="btn-inner">Back</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Character Selection Menu -->
+  <div id="charSelectionMenu">
+    <div class="char-title">Wähle deine Gestalt</div>
+    <div class="char-cards-container">
+      <div class="char-card" id="charCard1" onclick="selectChar(1)">
+        <img src="./IMG/Walking/001/Wraith_01_Moving Forward_000.png" alt="Wraith 1">
+        <div class="char-name-label">Der Wanderer</div>
+      </div>
+      <div class="char-card" id="charCard2" onclick="selectChar(2)">
+        <img src="./IMG/Walking/002/Wraith_02_Moving Forward_000.png" alt="Wraith 2">
+        <div class="char-name-label">Der Wächter</div>
+      </div>
+      <div class="char-card" id="charCard3" onclick="selectChar(3)">
+        <img src="./IMG/Walking/003/Wraith_03_Moving Forward_000.png" alt="Wraith 3">
+        <div class="char-name-label">Der Schatten</div>
+      </div>
+    </div>
+    
+    <div id="contractSection">
+      <div class="parchment-input-wrapper">
+        <input type="text" id="charNameInput" placeholder="Dein Name..." maxlength="12" autocomplete="off">
+      </div>
+      <div class="seal-button" onclick="submitCharacter()">
+        BESIEGELN
       </div>
     </div>
   </div>
@@ -60,7 +98,7 @@
     <div id="surface">
       <div id="player">
         <!-- Sprite-Sheet mit Ghost -->
-        <img id="spriteImg" src="./IMG/Ghost.png" alt="Eleven sprite" />
+        <img id="spriteImg" src="./IMG/Ghost1.png" alt="Eleven sprite" />
       </div>
 
       <!-- z.B. rotes Portal / Hitbox -->
