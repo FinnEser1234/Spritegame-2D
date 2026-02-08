@@ -8,13 +8,12 @@
 
   <link rel="stylesheet" href="./CSS/spritegame.css" />
   <link rel="stylesheet" href="./CSS/spritegame_rules.css">
-  <link rel="stylesheet" href="./CSS/char_selection.css">
 
   <script src="./JS/spritegame_detectCollisions.js" defer></script>
   <script src="./JS/spritegame_keyevents.js" defer></script>
   <script src="./JS/spritegame_player.js" defer></script>
   <script src="./JS/spritegame_main.js" defer></script>
-  <script src="./JS/spritegame_character.js" defer></script>
+  <script src="./JS/spritegame_boss.js" defer></script>
 </head>
 
 <body id="body">
@@ -23,7 +22,7 @@
 
     <img id="woodLog" src="./IMG/log.jpg" alt="">
     <div id="btnGrid">
-      <div class="menu-btn" id="startButton" onclick="openCharSelection()">
+      <div class="menu-btn" id="startButton" onclick="openSetupMenu()">
         <div class="btn-inner">Start Game</div>
       </div>
       <div class="menu-btn" id="ruleButton" onclick="showRules()">
@@ -66,29 +65,51 @@
     </div>
   </div>
 
-  <div id="charSelectionMenu">
-    <div class="char-title">Wähle deine Gestalt</div>
-    <div class="char-cards-container">
-      <div class="char-card" id="charCard1" onclick="selectChar(1)">
-        <img src="./IMG/Walking/001/Wraith_01_Moving Forward_000.png" alt="Wraith 1">
-        <div class="char-name-label">Der Wanderer</div>
+  <div id="setupMenu">
+    <div class="char-title">Wähle deine Herausforderung</div>
+    
+    <div class="parchment-input-wrapper">
+      <input type="text" id="playerNameInput" placeholder="Dein Name..." maxlength="12" autocomplete="off">
+    </div>
+
+    <div class="difficulty-container">
+      <div class="menu-btn diff-btn" onclick="selectDifficulty('normal')">
+        <div class="btn-inner">NORMAL</div>
       </div>
-      <div class="char-card" id="charCard2" onclick="selectChar(2)">
-        <img src="./IMG/Walking/002/Wraith_02_Moving Forward_000.png" alt="Wraith 2">
-        <div class="char-name-label">Der Wächter</div>
+      <div class="menu-btn diff-btn" onclick="selectDifficulty('hard')">
+        <div class="btn-inner">SCHWER</div>
       </div>
-      <div class="char-card" id="charCard3" onclick="selectChar(3)">
-        <img src="./IMG/Walking/003/Wraith_03_Moving Forward_000.png" alt="Wraith 3">
-        <div class="char-name-label">Der Schatten</div>
+      <div class="menu-btn diff-btn" onclick="selectDifficulty('ultra')">
+        <div class="btn-inner">ULTRA</div>
       </div>
     </div>
     
-    <div id="contractSection">
-      <div class="parchment-input-wrapper">
-        <input type="text" id="charNameInput" placeholder="Dein Name..." maxlength="12" autocomplete="off">
-      </div>
-      <div class="seal-button" onclick="submitCharacter()">
-        BESIEGELN
+    <div id="selectedDifficultyDisplay">Gewählt: -</div>
+
+    <div class="seal-button" onclick="submitSetup()">
+      STARTEN
+    </div>
+  </div>
+
+  <!-- Leaderboard Menu -->
+  <div id="leaderboardMenu">
+    <div class="char-title">Hall of Spirits</div>
+    
+    <div class="leaderboard-header">
+        <span>Rank</span>
+        <span>Name</span>
+        <span>Mode</span>
+        <span>Status</span>
+        <span>Collected</span>
+    </div>
+    
+    <div id="leaderboardList">
+        <!-- JS fills this -->
+    </div>
+
+    <div class="back-btn-wrapper">
+      <div class="menu-btn back-btn" onclick="closeLeaderboard()">
+        <div class="btn-inner">Back</div>
       </div>
     </div>
   </div>
@@ -100,6 +121,12 @@
       </div>
 
       <div id="redBox"></div>
+      <div id="boss"></div>
+    </div>
+
+    <!-- Boss Health Bar -->
+    <div id="bossHealthContainer" style="display: none;">
+      <div id="bossHealthFill"></div>
     </div>
 
     <div id="dashboard">
@@ -109,27 +136,31 @@
       <div id="healthBar">
         <div id="healthFill">100</div>
       </div>
+      <div id="shieldBar">
+        <div id="shieldFill">100</div>
+      </div>
+      <div id="damageDisplay">Damage: 10</div>
     </div>
   </div>
 
   <div id="shopMenu">
     <div id="shieldBuff">Shield
-      <div class="shopBtn">
+      <div class="shopBtn" id="shieldBuffBtn" onclick="buyItem(this)">
         <p>BUY</p>
       </div>    
     </div>
     <div id="lifeBuff">Life
-      <div class="shopBtn">
+      <div class="shopBtn" id="lifeBuffBtn" onclick="buyItem(this)">
         <p>BUY</p>
       </div>
     </div>
     <div id="damageBuff">Damage
-      <div class="shopBtn">
+      <div class="shopBtn" id="damageBuffBtn" onclick="buyItem(this)">
         <p>BUY</p>
       </div>
     </div>
     <div id="speedBuff">Speed
-      <div class="shopBtn">
+      <div class="shopBtn" id="speedBuffBtn" onclick="buyItem(this)">
         <p>BUY</p>
       </div>
     </div>

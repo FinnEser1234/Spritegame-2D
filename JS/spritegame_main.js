@@ -61,6 +61,9 @@ let GAME_CONFIG = {
 
 let gameRunning = false;
 let health = 100;
+let shield = 0;
+let damage = 10;
+
 let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
 let aufruesten = new Audio("./SOUNDS/aufruesten.mp3"); // Start with user's existing, corrected path if it was wrong
@@ -83,7 +86,23 @@ function startGame() {
   PLAYER.harnischCount = 0;
   PLAYER.skirtCount = 0;
   PLAYER.shoesCount = 0;
+  
+  // Reset Totals for Leaderboard
+  PLAYER.totalHelmets = 0;
+  PLAYER.totalHarnisch = 0;
+  PLAYER.totalSkirts = 0;
+  PLAYER.totalShoes = 0;
+  
+  // Reset Stats
+  health = 100;
+  shield = 100;
+  damage = 10;
+  GAME_CONFIG.characterSpeed = 4; // Reset Speed
+
   updateScoreDisplay();
+  updateHealthBar();
+  updateShieldBar();
+  updateDamageDisplay();
 
   // Hide menu immediately
   startMenu.style.opacity = 0;
@@ -182,15 +201,19 @@ function gameLoop() {
       switch (GAME_SCREEN.currentCoinType) {
         case 1:
           PLAYER.helmetCount += 1;
+          PLAYER.totalHelmets = (PLAYER.totalHelmets || 0) + 1;
           break;
         case 2:
           PLAYER.skirtCount += 1;
+          PLAYER.totalSkirts = (PLAYER.totalSkirts || 0) + 1;
           break;
         case 3:
           PLAYER.shoesCount += 1;
+          PLAYER.totalShoes = (PLAYER.totalShoes || 0) + 1;
           break;
         case 4:
           PLAYER.harnischCount += 1;
+          PLAYER.totalHarnisch = (PLAYER.totalHarnisch || 0) + 1;
           break;
       }
 
@@ -201,21 +224,109 @@ function gameLoop() {
   }
 
   if (PLAYER.helmetCount > 1 || PLAYER.harnischCount > 1 || PLAYER.skirtCount > 1 || PLAYER.shoesCount > 1) {
-    shieldBuff.innerHTML += PLAYER.helmetCount;
-    lifeBuff.innerHTML += PLAYER.harnischCount;
-    damageBuff.innerHTML += PLAYER.skirtCount;
-    speedBuff.innerHTML += PLAYER.shoesCount;
-
-    shopMenu.style.display = "flex";
-
-    PLAYER.helmetCount = 0;
-    PLAYER.harnischCount = 0;
-    PLAYER.skirtCount = 0;
-    PLAYER.shoesCount = 0;
+    openShop();
   }
 
   setTimeout(gameLoop, 1000 / GAME_CONFIG.gameSpeed);
 }
+
+function openShop() {
+    shopMenu.style.display = "flex";
+    gameRunning = false;
+    updateShopUI();
+}
+
+function updateShopUI() {
+    document.getElementById("shieldBuff").childNodes[0].textContent = `Shield (x${PLAYER.helmetCount}) `;
+    document.getElementById("lifeBuff").childNodes[0].textContent = `Life (x${PLAYER.harnischCount}) `;
+    document.getElementById("damageBuff").childNodes[0].textContent = `Damage (x${PLAYER.skirtCount}) `;
+    document.getElementById("speedBuff").childNodes[0].textContent = `Speed (x${PLAYER.shoesCount}) `;
+}
+
+function buyItem(btn) {
+    let type = btn.id;
+    let success = false;
+
+    if (type === "shieldBuffBtn") {
+        if (PLAYER.helmetCount > 0) {
+            PLAYER.helmetCount--;
+            shield += 10;
+            updateShieldBar();
+            console.log("Bought Shield/Helmet: Defense UP");
+            success = true;
+        }
+    } else if (type === "lifeBuffBtn") {
+        if (PLAYER.harnischCount > 0) {
+            PLAYER.harnischCount--;
+            health += 10;
+            updateHealthBar();
+            console.log("Bought Life/Harnisch: Health UP");
+            success = true;
+        }
+    } else if (type === "damageBuffBtn") {
+        if (PLAYER.skirtCount > 0) {
+            PLAYER.skirtCount--;
+            damage += 5;
+            updateDamageDisplay();
+            console.log("Bought Damage/Skirt: Power UP");
+             success = true;
+        }
+    } else if (type === "speedBuffBtn") {
+        if (PLAYER.shoesCount > 0) {
+            PLAYER.shoesCount--;
+            GAME_CONFIG.characterSpeed += 0.2;
+            console.log("Bought Speed/Shoes: Speed UP");
+             success = true;
+        }
+    }
+
+    if (success) {
+        updateScoreDisplay(); // Update debug HUD
+        updateShopUI();       // Update Shop Counts
+        
+        if(typeof aufruesten !== 'undefined') {
+            aufruesten.currentTime = 0;
+            aufruesten.play().catch(e => console.log(e));
+        }
+
+        checkShopStatus();
+    }
+}
+
+function updateHealthBar() {
+     let healthFill = document.getElementById("healthFill");
+     if(healthFill) {
+         let visualWidth = Math.min(100, health) * 2;
+         healthFill.style.width = visualWidth + "px"; 
+         healthFill.innerText = health;
+     }
+}
+
+function updateShieldBar() {
+    let shieldFill = document.getElementById("shieldFill");
+    if(shieldFill) {
+        // Fixierte Breite für 100%, auch wenn Wert > 100
+        let visualWidth = Math.min(100, shield) * 2;
+        shieldFill.style.width = visualWidth + "px"; 
+        shieldFill.innerText = shield;
+    }
+}
+
+function updateDamageDisplay() {
+    let dmgDisplay = document.getElementById("damageDisplay");
+    if(dmgDisplay) {
+        dmgDisplay.innerText = "Damage: " + damage;
+    }
+}
+
+function checkShopStatus() {
+     let totalItems = PLAYER.helmetCount + PLAYER.harnischCount + PLAYER.skirtCount + PLAYER.shoesCount;
+     if (totalItems <= 0) {
+         shopMenu.style.display = "none";
+         startBossFight();
+     }
+}
+
 
 function generateNewCoin() {
   let xCord = Math.floor(
@@ -246,4 +357,143 @@ function showRules() {
 function closeRules() {
   document.getElementById("rulesMenu").style.display = "none";
   document.getElementById("startMenu").style.display = "block";
+}
+
+/***********************************
+ * SETUP MENU (Difficulty)
+ ***********************************/
+let selectedDifficulty = 'normal';
+
+function openSetupMenu() {
+    let startMenu = document.getElementById("startMenu");
+    let setupMenu = document.getElementById("setupMenu");
+
+    if (startMenu && setupMenu) {
+        startMenu.style.transition = "opacity 0.5s";
+        startMenu.style.opacity = "0";
+        startMenu.style.zIndex = "-1";
+        
+        setupMenu.classList.add("active");
+        selectDifficulty(selectedDifficulty);
+    }
+}
+
+function selectDifficulty(diff) {
+    selectedDifficulty = diff;
+    let display = document.getElementById("selectedDifficultyDisplay");
+    if (display) {
+        display.innerText = "Gewählt: " + diff.toUpperCase();
+    }
+}
+
+function submitSetup() {
+    let nameInput = document.getElementById("playerNameInput");
+    let name = nameInput ? nameInput.value.trim() : "Player";
+    
+    if (name === "" && nameInput) {
+        nameInput.style.borderBottom = "2px solid red";
+        return;
+    }
+    
+    if (typeof PLAYER !== 'undefined') {
+        PLAYER.name = name;
+    }
+    
+    // Apply difficulty
+    if (typeof setBossDifficulty === 'function') {
+        setBossDifficulty(selectedDifficulty);
+    }
+
+    let setupMenu = document.getElementById("setupMenu");
+    if (setupMenu) {
+        setupMenu.classList.remove("active");
+    }
+    
+    setTimeout(() => {
+        startGame();
+    }, 500);
+}
+
+/***********************************
+ * LEADERBOARD & END GAME
+ ***********************************/
+function saveScore(result) {
+    let entry = {
+        name: (typeof PLAYER !== 'undefined' && PLAYER.name) ? PLAYER.name : "Unknown",
+        difficulty: selectedDifficulty,
+        result: result, // "Win" or "Loss"
+        items: {
+            helmets: PLAYER.totalHelmets || 0,
+            harnisch: PLAYER.totalHarnisch || 0,
+            skirts: PLAYER.totalSkirts || 0,
+            shoes: PLAYER.totalShoes || 0
+        },
+        date: new Date().toLocaleDateString()
+    };
+
+    let leaderboard = JSON.parse(localStorage.getItem('spriteGameLeaderboard')) || [];
+    leaderboard.push(entry);
+    localStorage.setItem('spriteGameLeaderboard', JSON.stringify(leaderboard));
+}
+
+function showLeaderboard() {
+    let listContainer = document.getElementById("leaderboardList");
+    if (!listContainer) return;
+
+    listContainer.innerHTML = "";
+    let data = JSON.parse(localStorage.getItem('spriteGameLeaderboard')) || [];
+    
+    // Sort by recent (reverse order of addition)
+    data.reverse();
+
+    if (data.length === 0) {
+        listContainer.innerHTML = "<div style='text-align:center; padding:20px; color:#ddd;'>Noch keine Einträge.</div>";
+    }
+
+    data.forEach((entry, index) => {
+        let row = document.createElement("div");
+        row.className = "leaderboard-row";
+        
+        let statusColor = entry.result === "Win" ? "#4caf50" : "#f44336";
+        
+        row.innerHTML = `
+            <div class="lb-rank">#${index + 1}</div>
+            <div class="lb-name">${entry.name}</div>
+            <div class="lb-diff">${entry.difficulty.toUpperCase()}</div>
+            <div class="lb-status" style="color:${statusColor}">${entry.result}</div>
+            <div class="lb-items">
+                <span>🛡️${entry.items.helmets}</span>
+                <span>💊${entry.items.harnisch}</span>
+                <span>⚔️${entry.items.skirts}</span>
+                <span>👞${entry.items.shoes}</span>
+            </div>
+        `;
+        listContainer.appendChild(row);
+    });
+
+    let startMenu = document.getElementById("startMenu");
+    let lbMenu = document.getElementById("leaderboardMenu");
+    
+    if(startMenu) startMenu.style.display = "none";
+    if(lbMenu) lbMenu.style.display = "flex";
+}
+
+function closeLeaderboard() {
+    let startMenu = document.getElementById("startMenu");
+    let lbMenu = document.getElementById("leaderboardMenu");
+    
+    if(lbMenu) lbMenu.style.display = "none";
+    if(startMenu) startMenu.style.display = "block";
+}
+
+function endGame(status) {
+    gameRunning = false;
+    saveScore(status);
+    
+    let msg = status === "Win" ? "SIEG! Der Fluch ist gebrochen." : "GAME OVER! Der Boss hat deine Seele verschlungen.";
+    
+    setTimeout(() => {
+        alert(msg);
+        location.reload(); 
+    }, 100);
 }
