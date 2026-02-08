@@ -60,7 +60,7 @@ let GAME_CONFIG = {
 };
 
 let gameRunning = false;
-
+let health = 100;
 let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
 let aufruesten = new Audio("./SOUNDS/aufruesten.mp3"); // Start with user's existing, corrected path if it was wrong
@@ -68,6 +68,12 @@ let bgMusic = new Audio("./SOUNDS/backgroundMusic.mp3");
 let doorSound = new Audio("./SOUNDS/door.mp3");
 bgMusic.loop = true;
 
+let shopMenu = document.getElementById("shopMenu");
+
+let shieldBuff = document.getElementById("shieldBuff");
+let lifeBuff = document.getElementById("lifeBuff");
+let damageBuff = document.getElementById("damageBuff");
+let speedBuff = document.getElementById("speedBuff");
 /***********************************
  * START GAME
  ***********************************/
@@ -93,7 +99,6 @@ function startGame() {
   doorSound.playbackRate = 1.6; 
   doorSound.play().catch((err) => {
     console.log("Door audio play failed:", err);
-    // If door sound fails, start immediately
     revealGame();
   });
   
@@ -195,9 +200,18 @@ function gameLoop() {
     }
   }
 
-  if (PLAYER.helmetCount > 5 && PLAYER.harnischCount > 5 && PLAYER.skirtCount > 5 && PLAYER.shoesCount > 5) {
-    GAME_SCREEN.debug_output.innerHTML = `<h2>You win!</h2><p>Bossfight soon</p>`;
-    return; 
+  if (PLAYER.helmetCount > 1 || PLAYER.harnischCount > 1 || PLAYER.skirtCount > 1 || PLAYER.shoesCount > 1) {
+    shieldBuff.innerHTML += PLAYER.helmetCount;
+    lifeBuff.innerHTML += PLAYER.harnischCount;
+    damageBuff.innerHTML += PLAYER.skirtCount;
+    speedBuff.innerHTML += PLAYER.shoesCount;
+
+    shopMenu.style.display = "flex";
+
+    PLAYER.helmetCount = 0;
+    PLAYER.harnischCount = 0;
+    PLAYER.skirtCount = 0;
+    PLAYER.shoesCount = 0;
   }
 
   setTimeout(gameLoop, 1000 / GAME_CONFIG.gameSpeed);

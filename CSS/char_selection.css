@@ -49,10 +49,6 @@
     position: relative;
     width: 120px;
     height: 160px;
-    
-    background: transparent;
-    border: none;
-    
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -100,6 +96,7 @@
     transition: opacity 0.3s;
     font-family: 'schreibschrift', cursive;
     margin-top: 10px;
+    text-align: center;
 }
 
 .char-card.selected .char-name-label {
@@ -109,7 +106,7 @@
 
 #contractSection {
     position: absolute;
-    bottom: 50px;
+    bottom: 100px;
     
     display: flex;
     flex-direction: column;

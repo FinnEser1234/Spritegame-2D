@@ -16,9 +16,35 @@ let PLAYER = {
 
 const SIZE = 2;
 
-PLAYER.box.style.transform = `scale(${SIZE})`;
+/***********************************
+ * PLAYER CONFIGURATION
+ ***********************************/
+let PLAYER_CONFIG = {
+    SCALE: 2.0,             // Skalierung des Spielers
+    WIDTH: 18.5,            // Breite der Hitbox / des sichtbaren Bereichs
+    HEIGHT: 24,             // Höhe der Hitbox / des sichtbaren Bereichs
+    ANIMATION_STEP: 17.475, // Pixel pro Frame in der Animation
+    MAX_FRAME: 11           // Letzter Frame-Index
+};
 
-let redBox = document.getElementById("redBox");
+function applyPlayerConfig() {
+    PLAYER.box.style.width = `${PLAYER_CONFIG.WIDTH}px`;
+    PLAYER.box.style.height = `${PLAYER_CONFIG.HEIGHT}px`;
+    let dir = PLAYER.spriteDirection || 1;
+    PLAYER.box.style.transform = `scaleX(${dir * PLAYER_CONFIG.SCALE}) scaleY(${PLAYER_CONFIG.SCALE})`;
+}
+
+applyPlayerConfig();
+
+/**
+ * Update configuration for specific sprite
+ * @param {Object} newConfig - Partial or full config object
+ */
+
+function updatePlayerConfig(newConfig) {
+    PLAYER_CONFIG = { ...PLAYER_CONFIG, ...newConfig };
+    applyPlayerConfig();
+}
 
 /***********************************
  * MOVE
@@ -40,8 +66,10 @@ function movePlayer(dx, dy, dr) {
     // Surface Grenzen (800x600)
     const SURFACE_WIDTH = 800;
     const SURFACE_HEIGHT = 600;
-    const PLAYER_WIDTH = 18.5;
-    const PLAYER_HEIGHT = 24;
+    
+    // Config Values using
+    const PLAYER_WIDTH = PLAYER_CONFIG.WIDTH;
+    const PLAYER_HEIGHT = PLAYER_CONFIG.HEIGHT;
 
     // Grenzen-Überprüfung
     if (newX < 0) {
@@ -67,7 +95,7 @@ function movePlayer(dx, dy, dr) {
     // update sprite direction if needed
     if (dr != 0 && dr != PLAYER.spriteDirection) {
         PLAYER.spriteDirection = dr;
-        PLAYER.box.style.transform = `scaleX(${dr * SIZE}) scaleY(${SIZE})`;
+        PLAYER.box.style.transform = `scaleX(${dr * PLAYER_CONFIG.SCALE}) scaleY(${PLAYER_CONFIG.SCALE})`;
     }
 
     // output in debugger box
@@ -84,10 +112,16 @@ function updateScoreDisplay() {
  * ANIMATE PLAYER
  * **********************************/
 function animatePlayer() {
-    if (PLAYER.spriteImgNumber < 11) { // switch to next sprite position
+    // Ensure style.right is initialized
+    if (!PLAYER.spriteImg.style.right) {
+        PLAYER.spriteImg.style.right = "0px";
+    }
+
+    if (PLAYER.spriteImgNumber < PLAYER_CONFIG.MAX_FRAME) { // switch to next sprite position
         PLAYER.spriteImgNumber++;
         let x = parseFloat(PLAYER.spriteImg.style.right);
-        x += 17.475; // Ghost Sprite-Breite (16px pro Frame)
+        if (isNaN(x)) x = 0;
+        x += PLAYER_CONFIG.ANIMATION_STEP; 
         PLAYER.spriteImg.style.right = x + "px";
     } else { // animation loop finished: back to start animation
         PLAYER.spriteImg.style.right = "0px";

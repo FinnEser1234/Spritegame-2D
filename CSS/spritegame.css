@@ -114,9 +114,6 @@ html, body {
   border: 2px solid rgba(94, 121, 151);
 }
 
-#startMenu h1 {
-}
-
 #woodLog {
   position: absolute;
   width: auto;
@@ -173,6 +170,101 @@ html, body {
   gap: 50px;
   height: 99vh;
   width: 100%;
+}
+
+#healthBar {
+  position: absolute;
+  top: 10%;
+  border: 2px solid black;
+}
+
+#healthFill {
+  width: 200px;
+  height: 20px;
+  background-color: red;
+  z-index: 1000;
+  text-align: center;
+  color: white;
+}
+
+#shopMenu {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('../IMG/table.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+  padding: 30px;
+  color: #402B15;
+  
+  box-shadow: 0 0 40px 10px rgba(224, 226, 106, 0.4), inset 0 0 50px rgba(0,0,0,0.5);
+  border: 4px solid #5c4020;
+  border-radius: 20px;
+  
+  z-index: 1000;
+  width: 60vw;
+  max-width: 900px;
+
+  display: none;
+  justify-content: space-around;
+  align-items: stretch;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  font-family: schreibschrift;
+}
+
+#shopMenu > div {
+  border: 1px solid rgba(64, 43, 21, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 150px;
+  min-height: 180px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+#shopMenu > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.shopBtn {
+  cursor: pointer;
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px 0;
+  
+  background-image: url('../IMG/woodplank.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  
+  font-size: 1.2rem;
+  color: #402B15;
+  text-align: center;
+  transition: transform 0.1s;
+}
+
+.shopBtn:active {
+  transform: scale(0.95);
+}
+
+.shopBtn p {
+  margin: 0;
+  font-weight: bold;
 }
 
 /* collision test */

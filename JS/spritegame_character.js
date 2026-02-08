@@ -4,11 +4,6 @@ function openCharSelection() {
     console.log("Opening Character Selection");
     let startMenu = document.getElementById("startMenu");
     let charMenu = document.getElementById("charSelectionMenu");
-    
-    if (!startMenu || !charMenu) {
-        console.error("Menus not found");
-        return;
-    }
 
     startMenu.style.transition = "opacity 0.5s";
     startMenu.style.opacity = "0";
@@ -44,15 +39,13 @@ function submitCharacter() {
         return;
     }
     
-    if (typeof PLAYER !== 'undefined') {
+    if (PLAYER !== 'undefined') {
         PLAYER.name = name;
         PLAYER.characterId = selectedCharId;
-        console.log(`Character binded: ${name} as Type ${selectedCharId}`);
         
         setupCharacterSprite(selectedCharId);
     }
     
-    // Start Game Transition
     let charMenu = document.getElementById("charSelectionMenu");
     charMenu.classList.remove("active");
     
@@ -66,20 +59,29 @@ function submitCharacter() {
 }
 
 function setupCharacterSprite(id) {
-    /*
     let spriteImg = document.getElementById("spriteImg");
+    
+    let config = {
+        SCALE: 2.0,
+        WIDTH: 18.5,
+        HEIGHT: 24,
+        ANIMATION_STEP: 17.475,
+        MAX_FRAME: 11
+    };
+
     if(id === 1) {
         spriteImg.src = "./IMG/Ghost1.png";
     }
 
     if(id === 2) {
         spriteImg.src = "./IMG/Ghost2.png";
-        Die nötigen px Anpassungen kommmen noch!!
     }
 
     if(id === 3) {
         spriteImg.src = "./IMG/Walking/003/Wraith_03_Moving Forward_000.png";
-        Hier fehlt noch das Sprite... ist aber in Bearbeitung!!
-    }    
-    */
+    } 
+
+    if (typeof updatePlayerConfig === 'function') {
+        updatePlayerConfig(config);
+    }
 }
