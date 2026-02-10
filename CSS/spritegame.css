@@ -3,7 +3,8 @@
   src: url('../FONT/The\ Knight.ttf');
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -18,18 +19,18 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
-  width: 20vw; 
+  justify-content: center;
+  width: 20vw;
   height: 90vh;
-  
+
   background-image: url('../IMG/table.jpg');
-  background-size: cover; 
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  
-  padding: 80px 40px; 
+
+  padding: 80px 40px;
   box-sizing: border-box;
-  
+
   font-family: schreibschrift;
   color: #2b1d0e;
   text-align: center;
@@ -132,7 +133,7 @@ html, body {
   font-size: 3rem;
   margin-top: 0;
   margin-bottom: 30px;
-  
+
   background-image: url('../IMG/woodplank.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -153,21 +154,23 @@ html, body {
   transform-origin: center;
   overflow: hidden;
 }
+
 #player {
   position: absolute;
-  width: 18.5px; /* viewing window - Ghost Sprite */
-  height: 24px; /* viewing window - Ghost Sprite */
+  width: 18.5px;
+  height: 24px;
   overflow: hidden;
-  opacity: 0; /* hide till start */
+  opacity: 0;
 }
+
 #spriteImg {
-  height: 40px; /* 8 Zeilen * 16px */
-  bottom: 0px; /* 7. Zeile von unten (Walking down) */
+  height: 40px;
+  bottom: 0px;
   position: relative;
 }
 
 #gameGrid {
-  display: flex; /* Flexbox statt Grid für einfachere Zentrierung */
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 50px;
@@ -178,16 +181,16 @@ html, body {
 #healthBar {
   position: absolute;
   top: 10%;
-  border: 3px solid #4a0d0d; /* Boss style border */
-  width: 200px; /* Fixed width for container */
-  height: 25px; /* Same height as boss bar */
-  background-color: #222; /* Boss style background */
+  border: 3px solid #4a0d0d;
+  width: 200px;
+  height: 25px;
+  background-color: #222;
 }
 
 #healthFill {
-  width: 100%; /* Start full */
+  width: 100%;
   height: 100%;
-  background-color: #8a1c1c; /* Boss style fill color */
+  background-color: #8a1c1c;
   z-index: 1000;
   text-align: center;
   color: white;
@@ -197,46 +200,45 @@ html, body {
 
 #shieldBar {
   position: absolute;
-  top: 15%; 
-  border: 3px solid #665b1b; /* Gold/Bronze style for shield/armor */
-  width: 200px; /* Fixed width for container */
+  top: 15%;
+  border: 3px solid #665b1b;
+  width: 200px;
   height: 25px;
   background-color: #222;
 }
 
 #shieldFill {
-  width: 0%; /* Start empty or controlled by JS */
+  width: 0%;
   height: 100%;
-  background-color: #bfa521; /* Goldish fill for shield */
+  background-color: #bfa521;
   z-index: 1000;
   text-align: center;
-  /* color: white; Removed text from here */
-  /* line-height: 25px; Removed text from here */
-  /* font-weight: bold; Removed text from here */
 }
 
-#healthText, #shieldText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: sans-serif;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px black;
-    z-index: 1001;
-    pointer-events: none;
-    width: 100%;
-    text-align: center;
+#healthText,
+#shieldText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+  z-index: 1001;
+  pointer-events: none;
+  width: 100%;
+  text-align: center;
 }
 
 #damageDisplay {
   position: absolute;
-  top: 18%;
+  top: 21%;
   width: 200px;
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
+  color: #4a0d0d;
 }
 
 #shopMenu {
@@ -247,14 +249,14 @@ html, body {
   background-image: url('../IMG/table.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  
+
   padding: 30px;
   color: #402B15;
-  
-  box-shadow: 0 0 40px 10px rgba(224, 226, 106, 0.4), inset 0 0 50px rgba(0,0,0,0.5);
+
+  box-shadow: 0 0 40px 10px rgba(224, 226, 106, 0.4), inset 0 0 50px rgba(0, 0, 0, 0.5);
   border: 4px solid #5c4020;
   border-radius: 20px;
-  
+
   z-index: 1000;
   width: 60vw;
   max-width: 900px;
@@ -268,7 +270,7 @@ html, body {
   font-family: schreibschrift;
 }
 
-#shopMenu > div {
+#shopMenu>div {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -286,12 +288,12 @@ html, body {
   margin-top: 15px;
   width: 100%;
   padding: 10px 0;
-  
+
   background-image: url('../IMG/woodplank.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
+
   font-size: 1.2rem;
   color: #402B15;
   text-align: center;
@@ -307,7 +309,6 @@ html, body {
   font-weight: bold;
 }
 
-/* collision test */
 #redBox {
   position: absolute;
   width: 30px;
@@ -324,251 +325,249 @@ html, body {
   position: absolute;
   width: 100px;
   height: 100px;
-  background-image: url('../IMG/Walking/boss/0_Zombie_Villager_Walking_000.png'); 
-  background-color: transparent; 
+  background-image: url('../IMG/Walking/boss/0_Zombie_Villager_Walking_000.png');
+  background-color: transparent;
   background-size: contain;
   background-repeat: no-repeat;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: none; /* Hidden by default */
+  display: none;
 }
 
 #bossHealthContainer {
-    position: absolute;
-    top: 50px;
-    left: 45%; /* Centered somewhat relative to surface */
-    transform: translateX(-50%);
-    width: 600px;
-    height: 25px;
-    border: 3px solid #4a0d0d;
-    background-color: #222;
-    z-index: 2000;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 25px;
+  border: 3px solid #4a0d0d;
+  background-color: #222;
+  z-index: 2000;
 }
 
 #bossHealthFill {
-    width: 100%;
-    height: 100%;
-    background-color: #8a1c1c;
-    transition: width 0.1s linear;
+  width: 100%;
+  height: 100%;
+  background-color: #8a1c1c;
+  transition: width 0.1s linear;
 }
 
 #bossHealthText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: sans-serif;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+  z-index: 2005;
 }
 
-/* Setup Menu - Difficulty Selection */
 #setupMenu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 2000;
-    background-color: black;
-    background-image: url('../IMG/characterBackground.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  background-color: black;
+  background-image: url('../IMG/characterBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #setupMenu.active {
-    opacity: 1;
-    pointer-events: all;
+  opacity: 1;
+  pointer-events: all;
 }
 
 .char-title {
-    color: #e0d0b0;
-    font-size: 3rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-    font-family: 'schreibschrift', cursive;
-    margin-bottom: 20px;
+  color: #e0d0b0;
+  font-size: 3rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+  font-family: 'schreibschrift', cursive;
+  margin-bottom: 20px;
 }
 
 .parchment-input-wrapper {
-    background-color: #dcbfa6; /* Fallback beige */
-    background-image: url('../IMG/paper.png'); 
-    background-size: 100% 100%;
-    width: 300px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 4px;
+  background-color: #dcbfa6;
+  background-image: url('../IMG/paper.png');
+  background-size: 100% 100%;
+  width: 300px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 #playerNameInput {
-    border: none;
-    background: transparent;
-    text-align: center;
-    font-family: 'schreibschrift', cursive;
-    font-size: 1.8rem;
-    color: #402B15;
-    outline: none;
-    width: 80%;
+  border: none;
+  background: transparent;
+  font-family: 'schreibschrift', cursive;
+  font-size: 1.8rem;
+  color: #402B15;
+  outline: none;
+  width: 80%;
 }
 
 .difficulty-container {
-    display: flex;
-    gap: 30px;
+  display: flex;
+  gap: 30px;
 }
 
 .diff-btn {
-    width: 150px;
+  width: 150px;
 }
 
 #selectedDifficultyDisplay {
-    color: white;
-    font-family: 'schreibschrift', cursive;
-    font-size: 1.5rem;
-    text-shadow: 1px 1px 4px black;
+  color: white;
+  font-family: 'schreibschrift', cursive;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 4px black;
 }
 
 .seal-button {
-    margin-top: 30px;
-    width: 200px;
-    padding: 15px;
-    background-image: url('../IMG/woodplank.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    color: #402B15; /* Dark brown text like other buttons */
-    font-family: 'schreibschrift', cursive;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: none;
-    text-shadow: 0px 1px 0px rgba(255,255,255,0.4);
+  margin-top: 30px;
+  width: 200px;
+  padding: 15px;
+  background-image: url('../IMG/woodplank.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #402B15;
+  font-family: 'schreibschrift', cursive;
+  font-size: 2rem;
+  font-family: 'schreibschrift', cursive;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.4);
 }
 
-/* LEADERBOARD STYLES */
 #leaderboardMenu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 2000;
-    background-color: black;
-    background-image: url('../IMG/characterBackground.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    align-items: center;
-    padding-top: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  background-color: black;
+  background-image: url('../IMG/characterBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
 }
 
 .leaderboard-header {
-    display: grid;
-    grid-template-columns: 50px 150px 80px 80px 250px;
-    gap: 10px;
-    background: rgba(0,0,0,0.7);
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    color: #e0d0b0;
-    font-family: 'schreibschrift', cursive;
-    font-size: 1.4rem;
-    text-align: center;
-    border: 1px solid #8b4513;
+  display: grid;
+  grid-template-columns: 50px 150px 80px 80px 250px;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: #e0d0b0;
+  font-family: 'schreibschrift', cursive;
+  font-size: 1.4rem;
+  text-align: center;
+  border: 1px solid #8b4513;
 }
 
 #leaderboardList {
-    width: 80%;
-    max-width: 900px;
-    height: 60vh;
-    overflow-y: auto;
-    background: rgba(0,0,0,0.5);
-    border: 2px solid #8b4513;
-    padding: 10px;
-    border-radius: 5px;
+  width: fit-content;
+  min-width: 680px;
+  max-width: 95vw;
+  height: 60vh;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #8b4513;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .leaderboard-row {
-    display: grid;
-    grid-template-columns: 50px 150px 80px 80px 250px;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    margin-bottom: 5px;
-    padding: 10px;
-    align-items: center;
-    color: white;
-    font-family: sans-serif;
-    font-size: 1rem;
-    text-align: center;
+  display: grid;
+  grid-template-columns: 50px 150px 80px 80px 250px;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 5px;
+  padding: 10px;
+  align-items: center;
+  color: white;
+  font-family: sans-serif;
+  font-size: 1rem;
+  text-align: center;
 }
 
-/* END SCREEN */
 #endScreen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 3000;
-    background-color: rgba(0,0,0,0.9);
-    
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-family: 'schreibschrift', cursive;
-    text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  background-color: rgba(0, 0, 0, 0.9);
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'schreibschrift', cursive;
+  text-align: center;
 }
 
 #endScreen h1 {
-    font-size: 6rem;
-    margin-bottom: 20px;
+  font-size: 6rem;
+  margin-bottom: 20px;
 }
 
 #endMessage {
-    font-size: 2rem;
-    margin-bottom: 40px;
-    color: #ccc;
-    max-width: 60%;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #ccc;
+  max-width: 60%;
 }
-/* Removed complex stats styling */
-
 
 .leaderboard-row:nth-child(even) {
-    background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .lb-items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
 }
 
 .lb-status {
-    font-weight: bold;
+  font-weight: bold;
 }

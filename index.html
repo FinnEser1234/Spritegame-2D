@@ -67,7 +67,7 @@
 
   <div id="setupMenu">
     <div class="char-title">Wähle deine Herausforderung</div>
-    
+
     <div class="parchment-input-wrapper">
       <input type="text" id="playerNameInput" placeholder="Dein Name..." maxlength="12" autocomplete="off">
     </div>
@@ -83,7 +83,7 @@
         <div class="btn-inner">ULTRA</div>
       </div>
     </div>
-    
+
     <div id="selectedDifficultyDisplay">Gewählt: -</div>
 
     <div class="seal-button" onclick="submitSetup()">
@@ -91,22 +91,24 @@
     </div>
   </div>
 
-  <!-- Leaderboard Menu -->
   <div id="leaderboardMenu">
     <div class="char-title">Hall of Spirits</div>
-    
+
     <div class="leaderboard-header">
-        <span>Rank</span>
-        <span>Name</span>
-        <span>Mode</span>
-        <span>Status</span>
-        <span>Collected</span>
+      <span>Rank</span>
+      <span>Name</span>
+      <span>Mode</span>
+      <span>Status</span>
+      <span>Collected</span>
     </div>
-    
+
     <div id="leaderboardList">
     </div>
 
     <div class="back-btn-wrapper">
+      <div class="menu-btn back-btn" onclick="resetLeaderboard()" style="margin-bottom: 10px;">
+        <div class="btn-inner" style="color: #a00; font-size: 1.2rem;">Reset</div>
+      </div>
       <div class="menu-btn back-btn" onclick="closeLeaderboard()">
         <div class="btn-inner">Back</div>
       </div>
@@ -116,9 +118,9 @@
   <div id="endScreen">
     <h1 id="endTitle">GAME OVER</h1>
     <div id="endMessage">The curse claims another soul.</div>
-    
+
     <div class="menu-btn" onclick="location.reload()">
-        <div class="btn-inner">Main Menu</div>
+      <div class="btn-inner">Main Menu</div>
     </div>
   </div>
 
@@ -132,7 +134,6 @@
       <div id="boss"></div>
     </div>
 
-    <!-- Boss Health Bar -->
     <div id="bossHealthContainer" style="display: none;">
       <div id="bossHealthFill"></div>
       <div id="bossHealthText"></div>
@@ -158,7 +159,7 @@
     <div id="shieldBuff">Shield
       <div class="shopBtn" id="shieldBuffBtn" onclick="buyItem(this)">
         <p>BUY</p>
-      </div>    
+      </div>
     </div>
     <div id="lifeBuff">Life
       <div class="shopBtn" id="lifeBuffBtn" onclick="buyItem(this)">

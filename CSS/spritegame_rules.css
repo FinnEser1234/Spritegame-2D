@@ -1,12 +1,12 @@
 #rulesMenu {
   display: none;
-  position: fixed; /* Fix positioned to cover screen */
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 2000;
   width: 100%;
   height: 100%;
-  background-image: url('../IMG/book.jpg'); /* Background here prevents lag */
+  background-image: url('../IMG/book.jpg');
   background-size: cover;
   background-position: center;
   padding: 20px;
@@ -31,7 +31,7 @@
 }
 
 .left-page {
-  padding-left: 12%; 
+  padding-left: 12%;
   padding-right: 4%;
 }
 
@@ -40,34 +40,15 @@
   padding-right: 12%;
 }
 
-/* Specific adjustments if needed for left/right page alignment */
-
 .rule-box {
   width: 100%;
   height: auto;
   padding: 20px;
-  background-color: transparent; /* Transparent background */
-  box-shadow: none; /* No shadow */
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none; /* Removed blur */
-}
-
-.rule-box:hover {
-  transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 0.1); /* Slight highlight on hover */
-}
-
-.rule-box img {
-  width: 80px;
-  height: auto;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
 }
 
 .rule-box p {
@@ -76,7 +57,7 @@
   font-size: 1.5rem;
   margin: 0;
   text-align: center;
-  text-shadow: 0 0 2px rgba(255,255,255,0.8);
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
   font-weight: bold;
 }
 

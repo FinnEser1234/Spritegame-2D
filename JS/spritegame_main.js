@@ -14,29 +14,24 @@ let GAME_SCREEN = {
 function resizeGame() {
   const containerWidth = window.innerWidth;
   const containerHeight = window.innerHeight;
-  const surfaceWidth = 800; // Original width
-  const surfaceHeight = 600; // Original height
-  const dashboardWidth = 250; // Width of the dashboard
-  const gap = 50; // Gap between surface and dashboard
-  const padding = 40; // Safety padding
+  const surfaceWidth = 800;
+  const surfaceHeight = 600;
+  const dashboardWidth = 250;
+  const gap = 50;
+  const padding = 40;
 
-  // Width available for the surface (Total - Dashboard - Gap - Padding)
   const availableWidth = containerWidth - dashboardWidth - gap - padding * 2;
-  // Height available (Total - Padding)
   const availableHeight = containerHeight - padding * 2;
 
-  // Calculate scale to fit both dimensions
   let scale = Math.min(
     availableWidth / surfaceWidth,
     availableHeight / surfaceHeight
   );
 
-  // Limit minimum scale
   if (scale < 0.3) scale = 0.3;
 
   GAME_SCREEN.surface.style.transform = `scale(${scale})`;
   
-  // Adjust margins to remove whitespace caused by scaling (centering)
   const marginH = (surfaceWidth * (scale - 1)) / 2;
   const marginV = (surfaceHeight * (scale - 1)) / 2;
 
@@ -46,17 +41,15 @@ function resizeGame() {
   GAME_SCREEN.surface.style.marginBottom = `${marginV}px`;
 }
 
-// Initial call
 resizeGame();
-// Adjust on window resize
 window.addEventListener('resize', resizeGame);
 
 /***********************************
  * GAME CONFIG
  ***********************************/
 let GAME_CONFIG = {
-  gameSpeed: 35, // fps
-  characterSpeed: 4, // px per step
+  gameSpeed: 35,
+  characterSpeed: 4,
 };
 
 let gameRunning = false;
@@ -66,7 +59,7 @@ let damage = 10;
 
 let startMenu = document.getElementById("startMenu");
 let gameGrid = document.getElementById("gameGrid");
-let aufruesten = new Audio("./SOUNDS/aufruesten.mp3"); // Start with user's existing, corrected path if it was wrong
+let aufruesten = new Audio("./SOUNDS/aufruesten.mp3");
 let bgMusic = new Audio("./SOUNDS/backgroundMusic.mp3");
 let doorSound = new Audio("./SOUNDS/door.mp3");
 bgMusic.loop = true;
@@ -81,40 +74,34 @@ let speedBuff = document.getElementById("speedBuff");
  * START GAME
  ***********************************/
 function startGame() {
-  // Reset Scores
   PLAYER.helmetCount = 0;
   PLAYER.harnischCount = 0;
   PLAYER.skirtCount = 0;
   PLAYER.shoesCount = 0;
   
-  // Reset Totals for Leaderboard
   PLAYER.totalHelmets = 0;
   PLAYER.totalHarnisch = 0;
   PLAYER.totalSkirts = 0;
   PLAYER.totalShoes = 0;
   
-  // Reset Stats
   health = 100;
   shield = 100;
   damage = 10;
-  GAME_CONFIG.characterSpeed = 4; // Reset Speed
+  GAME_CONFIG.characterSpeed = 4;
 
   updateScoreDisplay();
   updateHealthBar();
   updateShieldBar();
   updateDamageDisplay();
 
-  // Hide menu immediately
   startMenu.style.opacity = 0;
   startMenu.style.zIndex = -1;
   GAME_SCREEN.startButton.style.display = "none";
   GAME_SCREEN.startButton.removeAttribute("onclick");
 
-  // Make screen black
   document.body.style.backgroundImage = "none";
   document.body.style.backgroundColor = "black";
 
-  // Play door sound first
   doorSound.playbackRate = 1.6; 
   doorSound.play().catch((err) => {
     console.log("Door audio play failed:", err);
@@ -196,7 +183,6 @@ function gameLoop() {
     KEY_EVENTS.downArrow
   ) {
     if (isColliding(PLAYER.box, redBox, -10)) {
-      console.log("Eingesammelt");
 
       switch (GAME_SCREEN.currentCoinType) {
         case 1:
@@ -252,7 +238,6 @@ function buyItem(btn) {
             PLAYER.helmetCount--;
             shield += 10;
             updateShieldBar();
-            console.log("Bought Shield/Helmet: Defense UP");
             success = true;
         }
     } else if (type === "lifeBuffBtn") {
@@ -260,7 +245,6 @@ function buyItem(btn) {
             PLAYER.harnischCount--;
             health += 10;
             updateHealthBar();
-            console.log("Bought Life/Harnisch: Health UP");
             success = true;
         }
     } else if (type === "damageBuffBtn") {
@@ -268,21 +252,19 @@ function buyItem(btn) {
             PLAYER.skirtCount--;
             damage += 5;
             updateDamageDisplay();
-            console.log("Bought Damage/Skirt: Power UP");
              success = true;
         }
     } else if (type === "speedBuffBtn") {
         if (PLAYER.shoesCount > 0) {
             PLAYER.shoesCount--;
             GAME_CONFIG.characterSpeed += 0.2;
-            console.log("Bought Speed/Shoes: Speed UP");
              success = true;
         }
     }
 
     if (success) {
-        updateScoreDisplay(); // Update debug HUD
-        updateShopUI();       // Update Shop Counts
+        updateScoreDisplay(); 
+        updateShopUI();
         
         if(typeof aufruesten !== 'undefined') {
             aufruesten.currentTime = 0;
@@ -298,7 +280,6 @@ function updateHealthBar() {
      let healthText = document.getElementById("healthText");
      
      if(healthFill) {
-         // Cap visual width at 100%
          let pct = Math.min(100, health); 
          healthFill.style.width = pct + "%"; 
      }
@@ -313,7 +294,6 @@ function updateShieldBar() {
     let shieldText = document.getElementById("shieldText");
 
     if(shieldFill) {
-        // Cap visual width at 100%
         let pct = Math.min(100, shield);
         shieldFill.style.width = pct + "%"; 
     }
@@ -432,7 +412,7 @@ function saveScore(result) {
     let entry = {
         name: (typeof PLAYER !== 'undefined' && PLAYER.name) ? PLAYER.name : "Unknown",
         difficulty: selectedDifficulty,
-        result: result, // "Win" or "Loss"
+        result: result, 
         items: {
             helmets: PLAYER.totalHelmets || 0,
             harnisch: PLAYER.totalHarnisch || 0,
@@ -454,7 +434,6 @@ function showLeaderboard() {
     listContainer.innerHTML = "";
     let data = JSON.parse(localStorage.getItem('spriteGameLeaderboard')) || [];
     
-    // Sort by recent (reverse order of addition)
     data.reverse();
 
     if (data.length === 0) {
@@ -489,6 +468,13 @@ function showLeaderboard() {
     if(lbMenu) lbMenu.style.display = "flex";
 }
 
+function resetLeaderboard() {
+    if(confirm("Möchtest du die Bestenliste wirklich zurücksetzen?")) {
+        localStorage.removeItem('spriteGameLeaderboard');
+        showLeaderboard();
+    }
+}
+
 function closeLeaderboard() {
     let startMenu = document.getElementById("startMenu");
     let lbMenu = document.getElementById("leaderboardMenu");
@@ -500,8 +486,12 @@ function closeLeaderboard() {
 function endGame(status) {
     gameRunning = false;
     saveScore(status);
+
+    // Background reset
+    document.body.style.backgroundImage = "url('./IMG/mainBackground.png')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundColor = "";
     
-    // Elements
     let endScreen = document.getElementById("endScreen");
     let endTitle = document.getElementById("endTitle");
     let endMessage = document.getElementById("endMessage");
@@ -509,14 +499,12 @@ function endGame(status) {
     let endCollected = document.getElementById("endCollected");
 
     if (!endScreen) {
-        // Fallback if HTML not updated
         let msg = status === "Win" ? "SIEG! Der Fluch ist gebrochen." : "GAME OVER! Der Boss hat deine Seele verschlungen.";
         alert(msg);
         location.reload();
         return;
     }
 
-    // Set Content
     if (status === "Win") {
         endTitle.innerText = "VICTORY";
         endTitle.style.color = "#4caf50";
@@ -527,9 +515,7 @@ function endGame(status) {
         endMessage.innerText = "The Guardian has claimed your soul for eternity.";
     }
 
-    // Show Screen
     endScreen.style.display = "flex";
     
-    // UI Cleanup
     document.getElementById("gameGrid").style.opacity = 0;
 }

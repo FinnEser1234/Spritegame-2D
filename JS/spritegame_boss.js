@@ -1,7 +1,3 @@
-
-/***********************************
- * BOSS FIGHT
- ***********************************/
 let boss = {
     element: null,
     hp: 500,
@@ -17,7 +13,6 @@ let boss = {
     attackCooldownMax: 8
 };
 
-// Difficulty Configuration
 let bossStats = {
     normal: { hp: 200, speed: 1.0, dmg: 2, atkRate: 15 },
     hard: { hp: 500, speed: 1.3, dmg: 6, atkRate: 12 },
@@ -29,15 +24,12 @@ let currentDifficulty = 'normal';
 function setBossDifficulty(diff) {
     if (bossStats[diff]) {
         currentDifficulty = diff;
-        console.log("Boss Difficulty set to:", diff);
     }
 }
 
 function startBossFight() {
-    console.log("BOSS FIGHT START [" + currentDifficulty + "]");
     gameRunning = true;
     
-    // Apply Settings
     let stats = bossStats[currentDifficulty];
     boss.hp = stats.hp;
     boss.maxHp = stats.hp;
@@ -45,23 +37,17 @@ function startBossFight() {
     boss.damageToPlayer = stats.dmg;
     boss.attackCooldownMax = stats.atkRate;
 
-    // Hide Collection Items
     GAME_SCREEN.redBox.style.display = "none";
     
-    // Setup Health Bar
     document.getElementById("bossHealthContainer").style.display = "block";
     updateBossHealthBar();
 
-    // Setup Boss Visuals
     boss.element = document.getElementById("boss");
     boss.element.style.display = "block";
     
-    // Initial Position
     boss.x = GAME_SCREEN.surface.clientWidth / 2 - 50;
     boss.y = 50;
-    // boss.hp resetting done above
-    
-    // Visual Ambience
+
     let surface = document.getElementById("surface");
     surface.style.filter = "sepia(0.8) hue-rotate(320deg) contrast(1.2)";
     surface.style.border = "3px solid purple";
@@ -83,27 +69,20 @@ function updateBossHealthBar() {
 function bossLoop() {
     if (!gameRunning) return;
 
-    // 1. Player Movement
     if (KEY_EVENTS.leftArrow) { movePlayer(-GAME_CONFIG.characterSpeed, 0, -1); animatePlayer(); }
     if (KEY_EVENTS.rightArrow) { movePlayer(GAME_CONFIG.characterSpeed, 0, 1); animatePlayer(); }
     if (KEY_EVENTS.upArrow) { movePlayer(0, -GAME_CONFIG.characterSpeed, 0); animatePlayer(); }
     if (KEY_EVENTS.downArrow) { movePlayer(0, GAME_CONFIG.characterSpeed, 0); animatePlayer(); }
 
-    // 2. Boss Logic (Chase Player)
     moveBoss();
 
-    // 3. Collision / Damage Logic
-    // Simple: Touch Boss = Take Damage
     if (isColliding(PLAYER.box, boss.element, -30)) {
-        // PLAYER TAKES DAMAGE
         if (boss.attackCooldown <= 0) {
-            takeDamage(boss.damageToPlayer); // Uses difficulty setting
-            boss.attackCooldown = boss.attackCooldownMax; // Uses difficulty setting
+            takeDamage(boss.damageToPlayer); 
+            boss.attackCooldown = boss.attackCooldownMax; 
         }
 
-        // BOSS TAKES DAMAGE (Continuous contact)
         if (boss.damageTakenCooldown <= 0) {
-            // Damage calculation
             boss.hp -= (damage || 10); 
             updateBossHealthBar();
             boss.damageTakenCooldown = 15; 
@@ -117,7 +96,6 @@ function bossLoop() {
     if (boss.damageTakenCooldown > 0) boss.damageTakenCooldown--;
     if (boss.attackCooldown > 0) boss.attackCooldown--;
 
-    // Loop
     setTimeout(bossLoop, 1000 / GAME_CONFIG.gameSpeed);
 }
 
@@ -129,7 +107,7 @@ function moveBoss() {
     let dy = playerY - boss.y;
     let distance = Math.sqrt(dx*dx + dy*dy);
     
-    if (distance > 10) { // Stop if very close
+    if (distance > 10) {
         boss.x += (dx / distance) * boss.speed;
         boss.y += (dy / distance) * boss.speed;
     }
@@ -140,12 +118,10 @@ function moveBoss() {
 
 function takeDamage(amount) {
     if (shield > 0) {
-        // Shield is extra fragile: takes double damage
         shield -= (amount * 2);
         
         if (shield < 0) {
-             // Overflow damage goes to health
-             health += shield; // shield is negative, so this reduces health
+             health += shield;
              shield = 0;
         }
     } else {
