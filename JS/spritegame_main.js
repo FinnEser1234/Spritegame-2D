@@ -339,7 +339,7 @@ function generateNewCoin() {
   let randomItem = Math.floor(Math.random() * 4) + 1;
   GAME_SCREEN.currentCoinType = randomItem;
 
-  GAME_SCREEN.redBox.style.backgroundImage = `url("../IMG/rustung${randomItem}.png")`;
+  GAME_SCREEN.redBox.style.backgroundImage = `url("IMG/rustung${randomItem}.png")`;
   GAME_SCREEN.redBox.style.backgroundSize = "contain";
   GAME_SCREEN.redBox.style.backgroundRepeat = "no-repeat";
   GAME_SCREEN.redBox.style.left = xCord + "px";
