@@ -295,20 +295,31 @@ function buyItem(btn) {
 
 function updateHealthBar() {
      let healthFill = document.getElementById("healthFill");
+     let healthText = document.getElementById("healthText");
+     
      if(healthFill) {
-         let visualWidth = Math.min(100, health) * 2;
-         healthFill.style.width = visualWidth + "px"; 
-         healthFill.innerText = health;
+         // Cap visual width at 100%
+         let pct = Math.min(100, health); 
+         healthFill.style.width = pct + "%"; 
+     }
+     
+     if(healthText) {
+         healthText.innerText = Math.max(0, health);
      }
 }
 
 function updateShieldBar() {
     let shieldFill = document.getElementById("shieldFill");
+    let shieldText = document.getElementById("shieldText");
+
     if(shieldFill) {
-        // Fixierte Breite für 100%, auch wenn Wert > 100
-        let visualWidth = Math.min(100, shield) * 2;
-        shieldFill.style.width = visualWidth + "px"; 
-        shieldFill.innerText = shield;
+        // Cap visual width at 100%
+        let pct = Math.min(100, shield);
+        shieldFill.style.width = pct + "%"; 
+    }
+    
+    if(shieldText) {
+        shieldText.innerText = Math.max(0, shield);
     }
 }
 
@@ -490,10 +501,35 @@ function endGame(status) {
     gameRunning = false;
     saveScore(status);
     
-    let msg = status === "Win" ? "SIEG! Der Fluch ist gebrochen." : "GAME OVER! Der Boss hat deine Seele verschlungen.";
-    
-    setTimeout(() => {
+    // Elements
+    let endScreen = document.getElementById("endScreen");
+    let endTitle = document.getElementById("endTitle");
+    let endMessage = document.getElementById("endMessage");
+    let endDiff = document.getElementById("endDiff");
+    let endCollected = document.getElementById("endCollected");
+
+    if (!endScreen) {
+        // Fallback if HTML not updated
+        let msg = status === "Win" ? "SIEG! Der Fluch ist gebrochen." : "GAME OVER! Der Boss hat deine Seele verschlungen.";
         alert(msg);
-        location.reload(); 
-    }, 100);
+        location.reload();
+        return;
+    }
+
+    // Set Content
+    if (status === "Win") {
+        endTitle.innerText = "VICTORY";
+        endTitle.style.color = "#4caf50";
+        endMessage.innerText = "The curse is broken. Your soul is free at last.";
+    } else {
+        endTitle.innerText = "GAME OVER";
+        endTitle.style.color = "#f44336";
+        endMessage.innerText = "The Guardian has claimed your soul for eternity.";
+    }
+
+    // Show Screen
+    endScreen.style.display = "flex";
+    
+    // UI Cleanup
+    document.getElementById("gameGrid").style.opacity = 0;
 }

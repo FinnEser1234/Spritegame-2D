@@ -178,31 +178,56 @@ html, body {
 #healthBar {
   position: absolute;
   top: 10%;
-  border: 2px solid black;
+  border: 3px solid #4a0d0d; /* Boss style border */
+  width: 200px; /* Fixed width for container */
+  height: 25px; /* Same height as boss bar */
+  background-color: #222; /* Boss style background */
 }
 
 #healthFill {
-  width: 200px;
-  height: 20px;
-  background-color: red;
+  width: 100%; /* Start full */
+  height: 100%;
+  background-color: #8a1c1c; /* Boss style fill color */
   z-index: 1000;
   text-align: center;
   color: white;
+  line-height: 25px;
+  font-weight: bold;
 }
 
 #shieldBar {
   position: absolute;
-  top: 14%; 
-  border: 2px solid black;
+  top: 15%; 
+  border: 3px solid #665b1b; /* Gold/Bronze style for shield/armor */
+  width: 200px; /* Fixed width for container */
+  height: 25px;
+  background-color: #222;
 }
 
 #shieldFill {
-  width: 0px;
-  height: 20px;
-  background-color: blue;
+  width: 0%; /* Start empty or controlled by JS */
+  height: 100%;
+  background-color: #bfa521; /* Goldish fill for shield */
   z-index: 1000;
   text-align: center;
-  color: white;
+  /* color: white; Removed text from here */
+  /* line-height: 25px; Removed text from here */
+  /* font-weight: bold; Removed text from here */
+}
+
+#healthText, #shieldText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    z-index: 1001;
+    pointer-events: none;
+    width: 100%;
+    text-align: center;
 }
 
 #damageDisplay {
@@ -326,6 +351,17 @@ html, body {
     height: 100%;
     background-color: #8a1c1c;
     transition: width 0.1s linear;
+}
+
+#bossHealthText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
 }
 
 /* Setup Menu - Difficulty Selection */
@@ -487,6 +523,39 @@ html, body {
     font-size: 1rem;
     text-align: center;
 }
+
+/* END SCREEN */
+#endScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3000;
+    background-color: rgba(0,0,0,0.9);
+    
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'schreibschrift', cursive;
+    text-align: center;
+}
+
+#endScreen h1 {
+    font-size: 6rem;
+    margin-bottom: 20px;
+}
+
+#endMessage {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #ccc;
+    max-width: 60%;
+}
+/* Removed complex stats styling */
+
 
 .leaderboard-row:nth-child(even) {
     background: rgba(255, 255, 255, 0.05);

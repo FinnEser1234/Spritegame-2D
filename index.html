@@ -104,13 +104,21 @@
     </div>
     
     <div id="leaderboardList">
-        <!-- JS fills this -->
     </div>
 
     <div class="back-btn-wrapper">
       <div class="menu-btn back-btn" onclick="closeLeaderboard()">
         <div class="btn-inner">Back</div>
       </div>
+    </div>
+  </div>
+
+  <div id="endScreen">
+    <h1 id="endTitle">GAME OVER</h1>
+    <div id="endMessage">The curse claims another soul.</div>
+    
+    <div class="menu-btn" onclick="location.reload()">
+        <div class="btn-inner">Main Menu</div>
     </div>
   </div>
 
@@ -127,6 +135,7 @@
     <!-- Boss Health Bar -->
     <div id="bossHealthContainer" style="display: none;">
       <div id="bossHealthFill"></div>
+      <div id="bossHealthText"></div>
     </div>
 
     <div id="dashboard">
@@ -134,10 +143,12 @@
       <img onclick="mainMenu()" id="pen" src="./IMG/pen.png" alt="">
       <div id="debug_output"></div>
       <div id="healthBar">
-        <div id="healthFill">100</div>
+        <div id="healthFill"></div>
+        <div id="healthText">100</div>
       </div>
       <div id="shieldBar">
-        <div id="shieldFill">100</div>
+        <div id="shieldFill"></div>
+        <div id="shieldText">0</div>
       </div>
       <div id="damageDisplay">Damage: 10</div>
     </div>

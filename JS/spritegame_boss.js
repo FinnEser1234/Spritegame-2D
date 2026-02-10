@@ -19,7 +19,7 @@ let boss = {
 
 // Difficulty Configuration
 let bossStats = {
-    normal: { hp: 300, speed: 1.0, dmg: 4, atkRate: 15 },
+    normal: { hp: 200, speed: 1.0, dmg: 2, atkRate: 15 },
     hard: { hp: 500, speed: 1.3, dmg: 6, atkRate: 12 },
     ultra: { hp: 800, speed: 1.6, dmg: 8, atkRate: 8 }
 };
@@ -71,9 +71,13 @@ function startBossFight() {
 
 function updateBossHealthBar() {
     let bar = document.getElementById("bossHealthFill");
+    let text = document.getElementById("bossHealthText");
+    
     let pct = (boss.hp / boss.maxHp) * 100;
     if (pct < 0) pct = 0;
-    bar.style.width = pct + "%";
+    
+    if (bar) bar.style.width = pct + "%";
+    if (text) text.innerText = Math.max(0, boss.hp) + " / " + boss.maxHp;
 }
 
 function bossLoop() {
@@ -105,14 +109,7 @@ function bossLoop() {
             boss.damageTakenCooldown = 15; 
             
             if (boss.hp <= 0) {
-                if (typeof endGame === 'function') {
-                    endGame("Win");
-                } else {
-                    // Fallback if main.js not loaded/updated yet
-                    gameRunning = false;
-                    alert("VICTORY! The curse is lifted.");
-                    location.reload();
-                }
+                endGame("Win");
             }
         }
     }
@@ -161,10 +158,6 @@ function takeDamage(amount) {
     if (health <= 0) {
         if (typeof endGame === 'function') {
             endGame("Loss");
-        } else {
-            gameRunning = false;
-            alert("GAME OVER - The Boss consumed your soul.");
-            location.reload(); 
         }
     }
 }
