@@ -209,7 +209,7 @@ function gameLoop() {
     }
   }
 
-  if (PLAYER.helmetCount > 1 || PLAYER.harnischCount > 1 || PLAYER.skirtCount > 1 || PLAYER.shoesCount > 1) {
+  if (PLAYER.helmetCount > 4 || PLAYER.harnischCount > 4 || PLAYER.skirtCount > 4 || PLAYER.shoesCount > 4) {
     openShop();
   }
 
