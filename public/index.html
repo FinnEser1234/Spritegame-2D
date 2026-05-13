@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twilight Specter</title>
+  
+  <script src="/socket.io/socket.io.js"></script>
+
+  <link rel="stylesheet" href="./CSS/spritegame.css" />
+  <link rel="stylesheet" href="./CSS/spritegame_rules.css">
+
+  <script src="./JS/spritegame_detectCollisions.js" defer></script>
+  <script src="./JS/spritegame_keyevents.js" defer></script>
+  <script src="./JS/spritegame_player.js" defer></script>
+  <script src="./JS/spritegame_main.js" defer></script>
+  <script src="./JS/spritegame_boss.js" defer></script>
+  <script src="./JS/spritegame_cooperative.js" defer></script>
+</head>
+
+<body id="body">
+  <div id="startMenu">
+    <h1>Twilight Specter</h1>
+
+    <img id="woodLog" src="./IMG/log.jpg" alt="">
+    <div id="btnGrid">
+      <div class="menu-btn" id="startButton" onclick="openSetupMenu()">
+        <div class="btn-inner">Start Game</div>
+      </div>
+      <div class="menu-btn" id="ruleButton" onclick="showRules()">
+        <div class="btn-inner">Rules</div>
+      </div>
+      <div class="menu-btn" id="leaderBoard" onclick="showLeaderboard()">
+        <div class="btn-inner">Leaderboard</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rulesMenu">
+    <div class="book-page left-page">
+      <div class="rule-box">
+        <p>Nutze die Tasten W, A, S, D oder die Pfeiltasten auf deiner Tastatur, um deinen verlorenen Geist sicher durch
+          die dunkle und gefährliche Ebene zu manövrieren.</p>
+      </div>
+      <div class="rule-box">
+        <p>Solltest du jemals den Weg zurück suchen, klicke einfach auf den mystischen Federkiel am unteren
+          Bildschirmrand. Er dient dir als Ausweg, um das Spiel jederzeit zu verlassen oder ins Hauptmenü
+          zurückzukehren.</p>
+      </div>
+    </div>
+
+    <div class="book-page right-page">
+      <div class="rule-box">
+        <p>Deine Aufgabe ist es, die verstreuten Rüstungsteile wiederzufinden. Suche gründlich, denn du musst von jeder
+          einzelnen Rüstungsart mehr als 5 Exemplare einsammeln, um deine Stärke zu beweisen.</p>
+      </div>
+      <div class="rule-box">
+        <p>Nur wenn du all diese Artefakte vereinst und deine Sammlung vervollständigst, wird der Fluch gebrochen. Dann
+          erst wird deine umherwandernde Seele ihren lang ersehnten ewigen Frieden finden.</p>
+      </div>
+    </div>
+
+    <div class="back-btn-wrapper">
+      <div class="menu-btn back-btn" onclick="closeRules()">
+        <div class="btn-inner">Back</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="setupMenu">
+    <div class="char-title">Wähle deine Herausforderung</div>
+
+    <div class="parchment-input-wrapper">
+      <input type="text" id="playerNameInput" placeholder="Dein Name..." maxlength="12" autocomplete="off">
+    </div>
+
+    <div class="difficulty-container">
+      <div class="menu-btn diff-btn" onclick="selectDifficulty('normal')">
+        <div class="btn-inner">NORMAL</div>
+      </div>
+      <div class="menu-btn diff-btn" onclick="selectDifficulty('hard')">
+        <div class="btn-inner">SCHWER</div>
+      </div>
+      <div class="menu-btn diff-btn" onclick="selectDifficulty('ultra')">
+        <div class="btn-inner">ULTRA</div>
+      </div>
+    </div>
+
+    <div id="selectedDifficultyDisplay">Gewählt: -</div>
+
+    <div class="seal-button" onclick="submitSetup()">
+      STARTEN
+    </div>
+  </div>
+
+  <div id="leaderboardMenu">
+    <div class="char-title">Hall of Spirits</div>
+
+    <div class="leaderboard-header">
+      <span>Rank</span>
+      <span>Name</span>
+      <span>Mode</span>
+      <span>Status</span>
+      <span>Collected</span>
+    </div>
+
+    <div id="leaderboardList">
+    </div>
+
+    <div class="back-btn-wrapper">
+      <div class="menu-btn back-btn" onclick="resetLeaderboard()" style="margin-bottom: 10px;">
+        <div class="btn-inner" style="color: #a00; font-size: 1.2rem;">Reset</div>
+      </div>
+      <div class="menu-btn back-btn" onclick="closeLeaderboard()">
+        <div class="btn-inner">Back</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="endScreen">
+    <h1 id="endTitle">GAME OVER</h1>
+    <div id="endMessage">The curse claims another soul.</div>
+
+    <div class="menu-btn" onclick="location.reload()">
+      <div class="btn-inner">Main Menu</div>
+    </div>
+  </div>
+
+  <div id="gameGrid">
+    <div id="surface">
+      <div id="player">
+        <img id="spriteImg" src="./IMG/Ghost1.png" alt="" />
+      </div>
+
+      <div id="redBox"></div>
+      <div id="boss"></div>
+    </div>
+
+    <div id="bossHealthContainer" style="display: none;">
+      <div id="bossHealthFill"></div>
+      <div id="bossHealthText"></div>
+    </div>
+
+    <div id="dashboard">
+      <img id="paper" src="./IMG/paper.png" alt="">
+      <img onclick="mainMenu()" id="pen" src="./IMG/pen.png" alt="">
+      <div id="debug_output"></div>
+      <div id="healthBar">
+        <div id="healthFill"></div>
+        <div id="healthText">100</div>
+      </div>
+      <div id="shieldBar">
+        <div id="shieldFill"></div>
+        <div id="shieldText">0</div>
+      </div>
+      <div id="damageDisplay">Damage: 10</div>
+    </div>
+  </div>
+
+  <div id="shopMenu">
+    <div id="shieldBuff">Shield
+      <div class="shopBtn" id="shieldBuffBtn" onclick="buyItem(this)">
+        <p>BUY</p>
+      </div>
+    </div>
+    <div id="lifeBuff">Life
+      <div class="shopBtn" id="lifeBuffBtn" onclick="buyItem(this)">
+        <p>BUY</p>
+      </div>
+    </div>
+    <div id="damageBuff">Damage
+      <div class="shopBtn" id="damageBuffBtn" onclick="buyItem(this)">
+        <p>BUY</p>
+      </div>
+    </div>
+    <div id="speedBuff">Speed
+      <div class="shopBtn" id="speedBuffBtn" onclick="buyItem(this)">
+        <p>BUY</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
